@@ -102,13 +102,25 @@ function openModal(e) {
       <div class="modal-body">
         <div class="section-label">役割</div>
         <div class="role">${esc(e.role)}</div>
-        <div class="section-label">説明</div>
+        <div class="section-label">概要</div>
         <div class="desc">${esc(e.desc)}</div>
+        ${e.use ? `
+        <div class="section-label">使いどころ</div>
+        <div class="desc">${esc(e.use)}</div>` : ""}
+        ${e.examples && e.examples.length ? `
+        <div class="section-label">具体例</div>
+        <ul class="examples">${e.examples.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
         <div class="section-label">使い方（クリックでコピー）</div>
         <div class="copyrow">
           <code>${esc(e.ex)}</code>
           <button class="copy-btn">コピー</button>
         </div>
+        ${e.tip ? `
+        <div class="tipbox"><span class="tipbox-label">TIPS</span>${esc(e.tip)}</div>` : ""}
+        ${e.docs && e.docs.length ? `
+        <div class="section-label">公式ドキュメント</div>
+        <div class="doclinks">${e.docs.map((k) => DOC_LINKS[k]).filter(Boolean).map((d) =>
+          `<a class="doclink" href="${d.url}" target="_blank" rel="noopener">↗ ${esc(d.label)}</a>`).join("")}</div>` : ""}
       </div>
     </div>`;
   overlay.addEventListener("click", (ev) => { if (ev.target === overlay) closeModal(); });
