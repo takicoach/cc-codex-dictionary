@@ -59,8 +59,8 @@ function renderDictionary() {
 
   const grid = document.getElementById("grid");
   grid.innerHTML = filtered.length
-    ? filtered.map((e) => `
-      <div class="card">
+    ? filtered.map((e, i) => `
+      <div class="card" data-index="${i}">
         <div class="meta">
           <span class="dot" style="background:${CAT_COLORS[e.cat]}"></span>
           <span class="cat">${e.cat}</span>
@@ -72,7 +72,60 @@ function renderDictionary() {
         <div class="ex">${esc(e.ex)}</div>
       </div>`).join("")
     : `<div class="empty">該当する項目がありません。検索語やカテゴリを変えてみてください。</div>`;
+  grid.querySelectorAll(".card").forEach((el) =>
+    el.addEventListener("click", () => openModal(filtered[+el.dataset.index]))
+  );
 }
+
+// ---- 詳細モーダル + コピー ----
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "コピーしました";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "コピー"; btn.classList.remove("copied"); }, 1500);
+  });
+}
+
+function openModal(e) {
+  closeModal();
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+  overlay.id = "overlay";
+  overlay.innerHTML = `
+    <div class="modal" role="dialog" aria-label="${esc(e.name)}">
+      <div class="modal-head">
+        <span class="dot" style="width:9px;height:9px;border-radius:999px;background:${CAT_COLORS[e.cat]}"></span>
+        <span class="name">${esc(e.name)}</span>
+        <span class="kind mono" style="font-size:10px;border:1px solid var(--border);border-radius:5px;padding:2px 7px;color:var(--muted)">${esc(e.kind)}</span>
+        <button class="modal-close" aria-label="閉じる">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="section-label">役割</div>
+        <div class="role">${esc(e.role)}</div>
+        <div class="section-label">説明</div>
+        <div class="desc">${esc(e.desc)}</div>
+        <div class="section-label">使い方（クリックでコピー）</div>
+        <div class="copyrow">
+          <code>${esc(e.ex)}</code>
+          <button class="copy-btn">コピー</button>
+        </div>
+      </div>
+    </div>`;
+  overlay.addEventListener("click", (ev) => { if (ev.target === overlay) closeModal(); });
+  overlay.querySelector(".modal-close").addEventListener("click", closeModal);
+  const btn = overlay.querySelector(".copy-btn");
+  const doCopy = () => copyText(e.ex, btn);
+  btn.addEventListener("click", doCopy);
+  overlay.querySelector(".copyrow code").addEventListener("click", doCopy);
+  document.body.appendChild(overlay);
+}
+
+function closeModal() {
+  const el = document.getElementById("overlay");
+  if (el) el.remove();
+}
+
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeModal(); });
 
 // ---- 講座ページ ----
 function renderCourse() {
@@ -94,11 +147,16 @@ function renderCourse() {
           <div class="step">
             <h3>${s.h}</h3>
             <p>${s.p}</p>
-            <div class="codeblock">${esc(s.code)}</div>
+            <div class="codeblock">${esc(s.code)}<button class="copy-btn">コピー</button></div>
             ${s.tip ? `<div class="tip">${s.tip}</div>` : ""}
           </div>`).join("")}
       </section>`)
     .join("");
+
+  const allSteps = course.chapters.flatMap((ch) => ch.steps);
+  document.querySelectorAll("#course .codeblock .copy-btn").forEach((btn, i) =>
+    btn.addEventListener("click", () => copyText(allSteps[i].code, btn))
+  );
 }
 
 // ---- 初期化 ----
