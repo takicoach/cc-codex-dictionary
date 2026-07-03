@@ -1,0 +1,150 @@
+/* Soft Cards — design tokens per handoff */
+:root {
+  --bg: #faf9f5;
+  --surface: #ffffff;
+  --surface2: #f5f4ee;
+  --fg: #2b2a27;
+  --muted: #6b6862;
+  --border: #e8e5dc;
+  --accent: #c15f3c;
+  --accent-ink: #c15f3c;
+}
+:root[data-theme="dark"] {
+  --bg: #262421;
+  --surface: #302e2b;
+  --surface2: #37342f;
+  --fg: #f3f1ea;
+  --muted: #a8a49b;
+  --border: #423f3a;
+}
+* { box-sizing: border-box; }
+::selection { background: rgba(217, 119, 87, 0.22); }
+input { outline: none; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.mono { font-family: "JetBrains Mono", monospace; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* header */
+header.site {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; flex-wrap: wrap; gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--fg); }
+.logo {
+  width: 34px; height: 34px; border-radius: 10px; background: var(--accent);
+  color: #fff; font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.brand span { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.pill {
+  padding: 7px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
+  color: var(--muted); background: none; border: none; font-family: inherit;
+}
+.pill.active { background: var(--accent); color: #fff; font-weight: 700; }
+.pill:disabled { opacity: 0.45; cursor: default; }
+.theme-toggle {
+  width: 36px; height: 36px; margin-left: 8px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg);
+  cursor: pointer; font-size: 15px;
+}
+.nav-link { font-size: 13px; color: var(--muted); text-decoration: none; padding: 7px 10px; }
+.nav-link:hover { color: var(--accent); }
+
+/* hero */
+.hero { padding: 48px 0 30px; text-align: center; }
+.eyebrow {
+  font-family: "JetBrains Mono", monospace; font-size: 12px;
+  letter-spacing: 0.24em; color: var(--accent); margin-bottom: 14px;
+}
+.hero h1 { font-size: 40px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
+.hero p { font-size: 15px; color: var(--muted); margin: 12px 0 0; line-height: 1.7; }
+.searchbar {
+  max-width: 520px; margin: 26px auto 0; display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  padding: 13px 20px; box-shadow: 0 8px 22px -14px rgba(40, 30, 20, 0.25);
+}
+.searchbar .glass { color: var(--muted); font-size: 16px; }
+.searchbar input {
+  border: none; background: transparent; flex: 1; font-size: 14px;
+  color: var(--fg); font-family: inherit;
+}
+
+/* chips */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; }
+.chip {
+  padding: 8px 16px; font-size: 13px; border-radius: 999px; cursor: pointer;
+  background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
+  font-family: inherit;
+}
+.chip.active { background: var(--accent); color: #fff; border: 1px solid var(--accent); font-weight: 700; }
+
+/* grid + cards */
+.grid {
+  padding: 24px 0 64px; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px; box-shadow: 0 1px 2px rgba(40, 30, 20, 0.04);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--accent);
+  box-shadow: 0 16px 32px -18px rgba(40, 30, 20, 0.35);
+}
+.card .meta { display: flex; align-items: center; gap: 8px; }
+.card .dot { width: 9px; height: 9px; border-radius: 999px; flex: none; }
+.card .cat { font-size: 12px; color: var(--muted); }
+.card .kind {
+  margin-left: auto; font-family: "JetBrains Mono", monospace; font-size: 10px;
+  border: 1px solid var(--border); border-radius: 5px; padding: 2px 7px; color: var(--muted);
+}
+.card .name { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 17px; word-break: break-all; }
+.card .role { font-size: 14px; font-weight: 700; }
+.card .desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.card .ex {
+  border-top: 1px solid var(--border); padding-top: 12px;
+  font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--accent-ink);
+  white-space: pre-wrap; word-break: break-all;
+}
+.empty { text-align: center; color: var(--muted); padding: 40px 0 64px; font-size: 14px; grid-column: 1 / -1; }
+
+/* course page */
+.course-layout { display: grid; grid-template-columns: 240px 1fr; gap: 32px; padding: 12px 0 64px; align-items: start; }
+@media (max-width: 800px) { .course-layout { grid-template-columns: 1fr; } }
+.toc {
+  position: sticky; top: 24px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 18px;
+}
+.toc .toc-title { font-size: 12px; letter-spacing: 0.18em; color: var(--accent); font-family: "JetBrains Mono", monospace; margin-bottom: 12px; }
+.toc a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; padding: 7px 8px; border-radius: 8px; line-height: 1.5; }
+.toc a:hover { background: var(--surface2); color: var(--fg); }
+.chapter {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 28px; margin-bottom: 20px; scroll-margin-top: 24px;
+}
+.chapter .ch-num { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--accent); }
+.chapter h2 { font-size: 24px; font-weight: 900; margin: 8px 0 4px; letter-spacing: -0.01em; }
+.chapter .ch-lead { font-size: 14px; color: var(--muted); line-height: 1.8; margin: 0 0 8px; }
+.step { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 18px; }
+.step h3 { font-size: 16px; font-weight: 700; margin: 0 0 8px; }
+.step p { font-size: 14px; color: var(--muted); line-height: 1.9; margin: 0 0 10px; }
+.codeblock {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; font-family: "JetBrains Mono", monospace; font-size: 13px;
+  line-height: 1.7; overflow-x: auto; white-space: pre; color: var(--fg);
+}
+.tip {
+  border-left: 3px solid var(--accent); background: var(--surface2);
+  border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 13px;
+  color: var(--muted); line-height: 1.8; margin-top: 10px;
+}
+.tip b { color: var(--accent); }
