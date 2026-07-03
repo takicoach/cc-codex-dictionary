@@ -9,6 +9,12 @@
   --accent: #c15f3c;
   --accent-ink: #c15f3c;
 }
+/* Codex 選択時は青系アクセント（OpenAI Codex ブランド準拠） */
+:root[data-product="codex"] {
+  --accent: #5a6cf5;
+  --accent-ink: #4d5ee0;
+}
+:root[data-product="codex"] ::selection { background: rgba(90, 108, 245, 0.22); }
 :root[data-theme="dark"] {
   --bg: #262421;
   --surface: #302e2b;
@@ -17,6 +23,15 @@
   --muted: #a8a49b;
   --border: #423f3a;
 }
+:root[data-theme="dark"][data-product="codex"] {
+  --bg: #21222b;
+  --surface: #2a2c38;
+  --surface2: #31333f;
+  --border: #3d4050;
+  --accent: #6b7cff;
+  --accent-ink: #8b98ff;
+}
+:root[data-product="codex"] .logo { background: linear-gradient(135deg, #6b7cff, #4d5ee0); }
 * { box-sizing: border-box; }
 ::selection { background: rgba(217, 119, 87, 0.22); }
 input { outline: none; }

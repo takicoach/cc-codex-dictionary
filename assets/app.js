@@ -19,9 +19,28 @@ function toggleDark() {
   applyTheme();
 }
 
+function applyFavicon() {
+  const color = state.product === "codex" ? "%235a6cf5" : "%23c15f3c";
+  const svg = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='${color}'/><text x='32' y='42' font-family='monospace' font-size='28' font-weight='bold' fill='white' text-anchor='middle'>›_</text></svg>`;
+  let link = document.getElementById("favicon");
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    link.id = "favicon";
+    document.head.appendChild(link);
+  }
+  link.href = svg;
+}
+
+function applyProduct() {
+  document.documentElement.dataset.product = state.product;
+  applyFavicon();
+}
+
 function setProduct(p) {
   state.product = p;
   state.cat = "すべて";
+  applyProduct();
   const url = new URL(location.href);
   url.searchParams.set("p", p);
   history.replaceState(null, "", url);
@@ -174,6 +193,7 @@ function renderCourse() {
 // ---- 初期化 ----
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme();
+  applyProduct();
   document.getElementById("theme-toggle").addEventListener("click", toggleDark);
   document.querySelectorAll("[data-product]").forEach((el) => {
     el.classList.toggle("active", el.dataset.product === state.product);
