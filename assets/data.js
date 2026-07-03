@@ -46,6 +46,18 @@ const DOC_LINKS = {
 
 const ENTRIES = {
   claude: [
+    { name: "install.sh", cat: "はじめ方", kind: "CLI", role: "インストール（公式スクリプト）", desc: "macOS / Linux / WSL 向けの公式インストール方法。1行実行するだけで導入できる。", ex: "$ curl -fsSL https://claude.ai/install.sh | bash",
+      use: "初めて Claude Code を入れるとき（推奨の方法）。", examples: ["Mac のターミナルに貼り付けて実行", "完了後にターミナルを開き直す"], tip: "Node.js のインストールは不要。この1行で完結する。", docs: ["cc_quickstart"] },
+    { name: "brew install --cask claude-code", cat: "はじめ方", kind: "CLI", role: "インストール（Homebrew）", desc: "Homebrew を使っている Mac ならこちらでも導入できる。", ex: "$ brew install --cask claude-code",
+      use: "Homebrew でツールを統一管理したい人向け。", examples: ["brew upgrade でまとめて更新"], docs: ["cc_quickstart"] },
+    { name: "Windows へのインストール", cat: "はじめ方", kind: "CLI", role: "インストール（Windows）", desc: "PowerShell の公式スクリプトまたは WinGet で導入する。WSL 上なら Mac/Linux と同じ手順。", ex: "PS> irm https://claude.ai/install.ps1 | iex",
+      use: "Windows パソコンで使い始めるとき。", examples: ["winget install --id Anthropic.ClaudeCode でも可"], docs: ["cc_quickstart"] },
+    { name: "claude --version", cat: "はじめ方", kind: "CLI", role: "インストール確認", desc: "バージョン番号が表示されればインストール成功。トラブル報告時にも使う。", ex: "$ claude --version",
+      use: "インストール直後の動作確認。", examples: ["更新後に新バージョンか確認"], docs: ["cc_cli"] },
+    { name: "初回ログイン（認証）", cat: "はじめ方", kind: "ext", role: "アカウント接続", desc: "初回起動時にブラウザが開き、Claude.ai アカウント（Pro/Max）または Claude Console（API 従量課金）でログインする。", ex: "$ claude → ブラウザでログイン",
+      use: "インストール後の最初の1回。", examples: ["Pro/Max プランなら Claude.ai を選択", "API 課金なら Console を選択"], tip: "後から /login で切替可能。どちらのアカウント種別かで料金体系が変わる。", docs: ["cc_quickstart"] },
+    { name: "IDE 拡張（VS Code 等）", cat: "はじめ方", kind: "ext", role: "エディタ連携", desc: "VS Code / Cursor / JetBrains の拡張を入れると、エディタ内で差分表示や起動ができる。ターミナル版と併用可。", ex: "VS Code 内のターミナルで claude を起動",
+      use: "普段エディタで作業している人。", examples: ["差分をエディタの UI で確認", "/ide で接続管理"], docs: ["cc_quickstart"] },
     { name: "claude", cat: "はじめ方", kind: "CLI", role: "対話セッションを開始", desc: "ターミナルでClaude Codeを起動し、対話を始める基本コマンド。", ex: "$ claude",
       use: "作業を始めるとき、いつでも最初に打つコマンド。", examples: ["プロジェクトフォルダに cd してから起動", "起動後に日本語で指示するだけ"], tip: "どのフォルダで起動したかが重要。作業対象のプロジェクト直下で起動するのが基本。", docs: ["cc_quickstart", "cc_cli"] },
     { name: "claude -c", cat: "はじめ方", kind: "CLI", role: "前回の続きから再開", desc: "直前のセッションの文脈を引き継いで会話を続ける。-r で過去一覧から選択も可能。", ex: "$ claude -c",
@@ -188,10 +200,16 @@ const ENTRIES = {
       use: "機能開発とバグ修正を同時に進めたいとき。", examples: ["worktreeごとにセッションを起動"], docs: ["cc_workflows"] },
   ],
   codex: [
+    { name: "install.sh", cat: "はじめ方", kind: "CLI", role: "インストール（公式スクリプト）", desc: "macOS / Linux 向けの公式インストールスクリプト。1行で導入できる。", ex: "$ curl -fsSL https://chatgpt.com/codex/install.sh | sh",
+      use: "初めて Codex CLI を入れるとき（推奨の方法）。", examples: ["Windows は PowerShell 版スクリプトあり"], docs: ["cx_home"] },
+    { name: "npm i -g @openai/codex", cat: "はじめ方", kind: "CLI", role: "インストール（npm / brew）", desc: "npm または brew install --cask codex でも導入できる。", ex: "$ npm install -g @openai/codex",
+      use: "npm や Homebrew で管理したい人向け。", examples: ["brew install --cask codex（Mac）"], docs: ["cx_home", "cx_github"] },
+    { name: "codex --version", cat: "はじめ方", kind: "CLI", role: "インストール確認", desc: "バージョン番号が表示されればインストール成功。", ex: "$ codex --version",
+      use: "インストール直後の動作確認。", examples: ["更新後のバージョン確認"], docs: ["cx_reference"] },
+    { name: "初回サインイン", cat: "はじめ方", kind: "ext", role: "アカウント接続", desc: "初回起動時に ChatGPT アカウント（Plus/Pro 等）または API キーでサインインする。", ex: "$ codex → Sign in with ChatGPT",
+      use: "インストール後の最初の1回。", examples: ["ChatGPT プラン内で使うなら ChatGPT ログイン", "従量課金なら API キー"], docs: ["cx_home"] },
     { name: "codex", cat: "はじめ方", kind: "CLI", role: "対話セッションを開始", desc: "ターミナルでCodex CLIを起動し、対話を始める基本コマンド。", ex: "$ codex",
       use: "Codex での作業開始はいつもこれ。", examples: ["プロジェクトフォルダで起動", "日本語でそのまま指示"], docs: ["cx_home", "cx_reference"] },
-    { name: "npm i -g @openai/codex", cat: "はじめ方", kind: "CLI", role: "インストール", desc: "npm または brew install --cask codex で導入。公式インストールスクリプトも利用可。", ex: "$ npm install -g @openai/codex",
-      use: "最初の1回だけ。", examples: ["npm でインストール", "Mac は brew install --cask codex も可"], docs: ["cx_home", "cx_github"] },
     { name: "codex resume", cat: "はじめ方", kind: "CLI", role: "セッションを再開", desc: "過去のセッション一覧から選んで続きを再開する。--last で直前を即再開。", ex: "$ codex resume --last",
       use: "昨日の続きから再開したいとき。", examples: ["codex resume で一覧から選択", "--last で直前セッションに直行"], docs: ["cx_reference"] },
     { name: "AGENTS.md", cat: "ファイル", kind: ".md", role: "プロジェクトの記憶", desc: "規約・構成・作法をCodexへ伝える文脈ファイル。Claude CodeのCLAUDE.mdに相当。", ex: "./AGENTS.md",
@@ -265,12 +283,15 @@ const COURSES = {
     lead: "インストールから拡張機能まで、非エンジニアでも順番に進めれば使えるようになるステップ式講座。",
     chapters: [
       {
-        title: "インストールと起動",
-        lead: "まずは Claude Code を手元のパソコンに入れて、最初の一言を投げるところまで。",
+        title: "セットアップ（インストール〜初回起動）",
+        lead: "ターミナルを開くところから、最初の一言を投げるまでを一つずつ。ここが終われば Claude Code は使える状態になります。",
         steps: [
-          { h: "インストールする", p: "ターミナル（Macなら「ターミナル.app」）を開いて、公式のインストールスクリプトを実行します（Homebrew の場合は brew install --cask claude-code）。", code: "curl -fsSL https://claude.ai/install.sh | bash" },
-          { h: "起動してログインする", p: "作業したいプロジェクトのフォルダに移動してから起動します。初回はブラウザが開いてログインを求められます。", code: "cd ~/Projects/my-app\nclaude" },
-          { h: "最初の質問をしてみる", p: "起動したら日本語でそのまま話しかけられます。まずはプロジェクトについて聞いてみましょう。", code: "> このプロジェクトは何をするアプリ？構成を教えて", tip: "<b>ポイント:</b> Claude Code は「どのフォルダで起動したか」が重要。作業対象のプロジェクト直下で起動するのが基本です。" },
+          { h: "0. ターミナルを開く", p: "Mac は Spotlight（Cmd+Space）で「ターミナル」と入力して起動。Windows は「PowerShell」を起動します（WSL があればその中でもOK）。黒い画面が出れば準備完了です。", code: "# Mac: Cmd+Space → 「ターミナル」\n# Windows: スタート → 「PowerShell」" },
+          { h: "1. インストールする", p: "公式のインストールスクリプトを1行実行するだけです。Node.js などの事前準備は不要です。", code: "# Mac / Linux / WSL（推奨）\ncurl -fsSL https://claude.ai/install.sh | bash\n\n# Mac で Homebrew 派なら\nbrew install --cask claude-code\n\n# Windows (PowerShell)\nirm https://claude.ai/install.ps1 | iex" },
+          { h: "2. インストールを確認する", p: "ターミナルを一度開き直してから、バージョンが表示されるか確認します。数字が出れば成功です。", code: "claude --version", tip: "<b>コマンドが見つからないと言われたら:</b> ターミナルの再起動を試す。それでもダメなら claude doctor（または再インストール）で診断できます。" },
+          { h: "3. プロジェクトフォルダで起動する", p: "作業したいプロジェクトのフォルダに移動してから起動します。", code: "cd ~/Projects/my-app\nclaude" },
+          { h: "4. ログインする", p: "初回はブラウザが自動で開き、ログインを求められます。Claude Pro/Max プランの人は「Claude.ai アカウント」、API 従量課金の人は「Claude Console」を選びます。", code: "# ブラウザでログイン → ターミナルに戻ると完了\n# 後から切り替える場合:\n> /login", tip: "<b>どちらを選ぶ？:</b> 月額の Pro/Max プランに入っているならプラン内で使えるので Claude.ai アカウントを選択。未加入なら Console（使った分だけ課金）。" },
+          { h: "5. 動作確認と最初の質問", p: "起動できたら日本語でそのまま話しかけられます。まずはプロジェクトについて聞いてみましょう。", code: "> このプロジェクトは何をするアプリ？構成を教えて", tip: "<b>ポイント:</b> Claude Code は「どのフォルダで起動したか」が重要。作業対象のプロジェクト直下で起動するのが基本です。" },
         ],
       },
       {
@@ -315,12 +336,14 @@ const COURSES = {
     lead: "OpenAI の Codex CLI をゼロから。インストール、AGENTS.md、承認モード、自動化まで順番に学べます。",
     chapters: [
       {
-        title: "インストールと起動",
-        lead: "Codex CLI を導入して最初の対話を始めます。",
+        title: "セットアップ（インストール〜初回起動）",
+        lead: "ターミナルを開くところから最初の対話まで。Claude Code を入れたことがあれば流れはほぼ同じです。",
         steps: [
-          { h: "インストールする", p: "npm または Homebrew でインストールします。", code: "npm install -g @openai/codex\n# または\nbrew install --cask codex" },
-          { h: "起動してサインインする", p: "プロジェクトフォルダで起動し、初回は ChatGPT アカウント（または API キー）でサインインします。", code: "cd ~/Projects/my-app\ncodex" },
-          { h: "話しかけてみる", p: "日本語でそのまま指示できます。", code: "> このリポジトリの構成を説明して" },
+          { h: "0. ターミナルを開く", p: "Mac は Spotlight（Cmd+Space）で「ターミナル」、Windows は PowerShell を起動します。", code: "# Mac: Cmd+Space → 「ターミナル」\n# Windows: スタート → 「PowerShell」" },
+          { h: "1. インストールする", p: "公式スクリプト・npm・Homebrew のどれでも導入できます。", code: "# 公式スクリプト（Mac / Linux、推奨）\ncurl -fsSL https://chatgpt.com/codex/install.sh | sh\n\n# npm 派なら\nnpm install -g @openai/codex\n\n# Mac で Homebrew 派なら\nbrew install --cask codex" },
+          { h: "2. インストールを確認する", p: "バージョンが表示されれば成功です。", code: "codex --version" },
+          { h: "3. 起動してサインインする", p: "プロジェクトフォルダで起動し、初回は ChatGPT アカウント（Plus/Pro 等のプラン内で利用）または API キー（従量課金）でサインインします。", code: "cd ~/Projects/my-app\ncodex", tip: "<b>どちらを選ぶ？:</b> ChatGPT の有料プランに入っているなら「Sign in with ChatGPT」でプラン内利用が手軽です。" },
+          { h: "4. 話しかけてみる", p: "日本語でそのまま指示できます。", code: "> このリポジトリの構成を説明して" },
         ],
       },
       {
